@@ -1,31 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class FightController : MonoBehaviour
 {
     public Button knopka;
-    public Slider healthBar;
+    public Slider healthBarPlayer;
+    public Slider healthBarEnemy;
+    public TextMeshProUGUI restart;
 
     private void Start()
     {
-        Human rob = new("rob", 120, 16);
-        Human joe = new("joe", 45, 32);
-        //rob.fight(rob,joe);
+        Human rob = new("rob", 300, 10);
+        Human enemy = new("joe", 15, 10);
+        healthBarPlayer.maxValue = rob.Health;
+        healthBarPlayer.value = rob.Health;
+        healthBarEnemy.maxValue = enemy.Health;
+        healthBarEnemy.value = enemy.Health;
         knopka.onClick.AddListener(Click);
-        knopka.onClick.AddListener(()=>DoDamage(rob,joe));
+        knopka.onClick.AddListener(()=>DoDamage(rob,enemy));
     }
     public void Click()
     {
         Debug.Log("Click");
     }
-    public void DoDamage(Human rob, Human joe)
+    public void DoDamage(Human rob, Human enemy)
     {
-        ShowInfo(rob, joe);
-        joe.TakeDamage(ModDamage(rob.Power));
-        healthBar.value = joe.Health;
-        ShowInfo(rob, joe);
+        ShowInfo(rob, enemy);
+        enemy.TakeDamage(ModDamage(enemy.Power));
+        healthBarEnemy.value = enemy.Health;
+        rob.TakeDamage(ModDamage(rob.Power));
+        healthBarPlayer.value = rob.Health;
+        ShowInfo(rob, enemy);
+        if (rob.Health <= 0) 
+        {
+            win(rob.Name);
+        }
+        else if (enemy.Health <= 0) 
+        {
+            win(enemy.Name);
+        }
     }
     public void ShowInfo (Human rob, Human joe)
     {
@@ -50,5 +66,10 @@ public class FightController : MonoBehaviour
         }
         return damage;
     }
-
+    public void win(string name)
+    {
+        knopka.enabled= false;
+         
+        Debug.Log(name + " победил!");
+    }
 }

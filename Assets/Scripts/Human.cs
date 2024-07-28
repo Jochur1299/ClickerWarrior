@@ -2,7 +2,9 @@
 
 public class Human
 {
-    private string name { get; set; }
+    private string name;
+    public string Name { get { return name; } }
+   
     private int health;
     public int Health 
     {
@@ -29,17 +31,10 @@ public class Human
         this.health = health;
         this.power = power;
     }
-    public void win(string name)
-    {
-        Debug.Log(name + " победил!");
-    }
     public void TakeDamage(int value)
     {
         health -= value;
-        if (health <= 0) 
-        {
-            Debug.Log(name + " умер");
-        }
+        
     }
     
 }
