@@ -2,14 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class FightController : MonoBehaviour
 {
     public Button knopka;
+    public Button restartButton;
     public Slider healthBarPlayer;
     public Slider healthBarEnemy;
     public TextMeshProUGUI restart;
+    public TextMeshProUGUI winPlayer;
+    public TextMeshProUGUI winEnemy;
 
     private void Start()
     {
@@ -21,6 +25,7 @@ public class FightController : MonoBehaviour
         healthBarEnemy.value = enemy.Health;
         knopka.onClick.AddListener(Click);
         knopka.onClick.AddListener(()=>DoDamage(rob,enemy));
+        restartButton.onClick.AddListener(Restart);
     }
     public void Click()
     {
@@ -36,11 +41,13 @@ public class FightController : MonoBehaviour
         ShowInfo(rob, enemy);
         if (rob.Health <= 0) 
         {
-            win(rob.Name);
+            Win(rob.Name);
+            winEnemy.gameObject.SetActive(true);
         }
         else if (enemy.Health <= 0) 
         {
-            win(enemy.Name);
+            Win(enemy.Name);
+            winPlayer.gameObject.SetActive(true);
         }
     }
     public void ShowInfo (Human rob, Human joe)
@@ -66,10 +73,15 @@ public class FightController : MonoBehaviour
         }
         return damage;
     }
-    public void win(string name)
+    public void Win(string name)
     {
-        knopka.enabled= false;
-         
+        knopka.gameObject.SetActive(false);
+        restart.gameObject.SetActive(true);
+        restartButton.gameObject.SetActive(true);
         Debug.Log(name + " победил!");
+    }
+    public void Restart()
+    {
+        SceneManager.LoadScene(0);
     }
 }
