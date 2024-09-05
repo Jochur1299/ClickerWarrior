@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public class Human
+public class Human: IDisposable
 {
+    public event Action<int> OnHealthChange;
     private string name;
     public string Name { get { return name; } }
    
@@ -34,7 +36,11 @@ public class Human
     public void TakeDamage(int value)
     {
         health -= value;
-        
+        OnHealthChange?.Invoke(health);
     }
-    
+
+    public void Dispose()
+    {
+        OnHealthChange = null;
+    }
 }

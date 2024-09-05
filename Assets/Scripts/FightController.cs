@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -14,41 +13,67 @@ public class FightController : MonoBehaviour
     public TextMeshProUGUI restart;
     public TextMeshProUGUI winPlayer;
     public TextMeshProUGUI winEnemy;
-
+    private Human rob;
+    private Human enemy;
+    public List<EnemyData> enemys = new List<EnemyData> {};
+    public EnemyView enemyView;
+    public Button changeEnemy;
     private void Start()
     {
-        Human rob = new("rob", 300, 10);
-        Human enemy = new("joe", 15, 10);
+        Change();
+        rob = new("rob", 300, 10);
+        rob.OnHealthChange += SetPlayerHealth;
+        enemy.OnHealthChange += SetEnemyHealth;
+        InitHealtbars(rob, enemy);
+        knopka.onClick.AddListener(() => DoDamage(rob, enemy));
+        restartButton.onClick.AddListener(Restart);
+        changeEnemy.onClick.AddListener(Change);
+    }
+
+    private void InitHealtbars(Human rob, Human enemy)
+    {
         healthBarPlayer.maxValue = rob.Health;
         healthBarPlayer.value = rob.Health;
         healthBarEnemy.maxValue = enemy.Health;
         healthBarEnemy.value = enemy.Health;
-        knopka.onClick.AddListener(Click);
-        knopka.onClick.AddListener(()=>DoDamage(rob,enemy));
-        restartButton.onClick.AddListener(Restart);
     }
-    public void Click()
+
+    public void SetPlayerHealth(int playerHealth)
     {
-        Debug.Log("Click");
+        healthBarPlayer.value = playerHealth;
+    }
+    public void SetEnemyHealth(int enemyHealth)
+    {
+        healthBarEnemy.value = enemyHealth;
+    }
+    public void ChekEndGame(Human rob, Human enemy)
+    {
+        if (rob.Health <= 0)
+        {
+            
+        }
+        else if (enemy.Health <= 0)
+        {
+            Change();
+        }
+    }
+    public void Damage (Human player, Human enemy)
+    {
+        player.TakeDamage(ModDamage(enemy.Power));
     }
     public void DoDamage(Human rob, Human enemy)
     {
-        ShowInfo(rob, enemy);
-        enemy.TakeDamage(ModDamage(enemy.Power));
-        healthBarEnemy.value = enemy.Health;
-        rob.TakeDamage(ModDamage(rob.Power));
-        healthBarPlayer.value = rob.Health;
-        ShowInfo(rob, enemy);
-        if (rob.Health <= 0) 
+        int turn = Random.Range(1, 3);
+        Debug.Log(turn);
+        if (turn == 1)
         {
-            Win(rob.Name);
-            winEnemy.gameObject.SetActive(true);
+           Damage(rob, enemy);
         }
-        else if (enemy.Health <= 0) 
+        else
         {
-            Win(enemy.Name);
-            winPlayer.gameObject.SetActive(true);
+            Damage(enemy, rob);
         }
+        ChekEndGame(rob, enemy);
     }
     public void ShowInfo (Human rob, Human joe)
     {
@@ -73,15 +98,23 @@ public class FightController : MonoBehaviour
         }
         return damage;
     }
-    public void Win(string name)
-    {
-        knopka.gameObject.SetActive(false);
-        restart.gameObject.SetActive(true);
-        restartButton.gameObject.SetActive(true);
-        Debug.Log(name + " победил!");
-    }
     public void Restart()
     {
         SceneManager.LoadScene(0);
+    }
+    private void OnDestroy()
+    {
+        rob.OnHealthChange -= SetPlayerHealth;
+        enemy.OnHealthChange -= SetEnemyHealth;
+    }
+    int count = 0;
+    public void Change()
+    {
+        count++;
+        enemyView.SetAvatar(enemys[count].image);
+        if (count >= 2) 
+        {
+            count = 0;
+        }
     }
 }
