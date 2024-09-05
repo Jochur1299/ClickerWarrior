@@ -15,7 +15,4 @@ public class EnemyData : ScriptableObject
     public string name => this._name;
     public int power => this._power;
     public int health => this._health;
-
-
-
 }

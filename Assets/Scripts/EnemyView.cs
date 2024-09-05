@@ -12,5 +12,6 @@ public class EnemyView : MonoBehaviour
     public void SetAvatar (Sprite avatar)
     {
         enemyAvatar.sprite = avatar;
+        enemyAvatar.sprite = avatar;
     }
 }
