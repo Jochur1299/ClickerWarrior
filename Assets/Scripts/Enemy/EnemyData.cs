@@ -3,13 +3,13 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Enemy", menuName = "Entities/enemys")]
 public class EnemyData : ScriptableObject
 {
-    [SerializeField] private Sprite _image;
-    [SerializeField] private string _name;
-    [SerializeField] private int _power;
-    [SerializeField] private int _health;
+    [SerializeField] private Sprite image;
+    [SerializeField] private string name;
+    [SerializeField] private int power;
+    [SerializeField] private int health;
 
-    public Sprite image => this.image;
-    public string name => this._name;
-    public int power => this._power;
-    public int health => this._health;
+    public Sprite Image => image;
+    public string Name => name;
+    public int Power => power;
+    public int Health => health;
 }

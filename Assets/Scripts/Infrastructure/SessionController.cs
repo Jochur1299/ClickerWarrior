@@ -33,7 +33,7 @@ public class SessionController : MonoBehaviour
         var enemies = new List<Enemy>();
         foreach (var enemy in enemiesModels.ToList())
         {
-            enemies.Add(new Enemy(enemy.image,enemy.name,enemy.health,enemy.power));
+            enemies.Add(new Enemy(enemy.Image,enemy.Name,enemy.Health,enemy.Power));
         }
         return enemies;
     }

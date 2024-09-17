@@ -6,23 +6,27 @@ using Random = UnityEngine.Random;
 public class FightController : MonoBehaviour
 {
     public event Action OnIsPlayerDead; 
-    public event Action OnIsEnemiesDead; 
+    public event Action OnIsEnemiesDead;
 
+    [SerializeField] private EnemyView enemyView;
+    
     private List<Enemy> enemieslist = new();
     private Enemy currentEnemy;
     
     public void Init(Player player, List<Enemy> enemys) 
     {
         enemieslist = enemys;
-        // var a = Random.Range(0, enemys.Count);
         currentEnemy = enemys[Random.Range(0, enemys.Count)];
+        enemyView.Init(currentEnemy);
+        enemyView.HealthBarView.SetMaxValue(currentEnemy.Health);
         
         PlayerInputClicker.OnClick += () => DoPlayerDamage(player);
     }
 
     private void DoPlayerDamage(Player player)
     {
-        player.TakeDamage(DamageHalper.ModDamage(currentEnemy.Power));
+        currentEnemy.TakeDamage(DamageHalper.ModDamage(player.Power));
+        enemyView.HealthBarView.UpdateHealthBar(currentEnemy.Health);
         IsEnemyDead();
     }
 

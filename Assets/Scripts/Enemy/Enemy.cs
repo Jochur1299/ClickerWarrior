@@ -14,4 +14,9 @@ public class Enemy
         Health = health;
         Power = power;
     }
+    
+    public void TakeDamage(int value)
+    {
+        Health -= value;
+    }
 }
