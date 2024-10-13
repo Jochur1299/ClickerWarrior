@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6776852643a40334c8772a06d0cbac3f, type: 3}
   m_Name: Enemy
   m_EditorClassIdentifier: 
-  image: {fileID: 21300000, guid: c92b97bb96c7cb54d9bb991a6734072f, type: 3}
-  name: 2
+  image: {fileID: 21300000, guid: cbf8854798c1ecb48ac5bde34fd2df1e, type: 3}
+  name: Pupa
   power: 15
   health: 45

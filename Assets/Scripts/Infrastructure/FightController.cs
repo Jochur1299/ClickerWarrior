@@ -13,14 +13,19 @@ public class FightController : MonoBehaviour
     private List<Enemy> enemieslist = new();
     private Enemy currentEnemy;
     
-    public void Init(Player player, List<Enemy> enemys) 
+    public void Init(Player player, List<Enemy> enemys)
     {
         enemieslist = enemys;
         currentEnemy = enemys[Random.Range(0, enemys.Count)];
+        InitEnemyView();
+        PlayerInputClicker.OnClick += () => DoPlayerDamage(player);
+    }
+
+    private void InitEnemyView()
+    {
         enemyView.Init(currentEnemy);
         enemyView.HealthBarView.SetMaxValue(currentEnemy.Health);
-        
-        PlayerInputClicker.OnClick += () => DoPlayerDamage(player);
+        enemyView.HealthBarView.UpdateHealthBar(currentEnemy.Health);
     }
 
     private void DoPlayerDamage(Player player)
@@ -46,6 +51,7 @@ public class FightController : MonoBehaviour
             if (enemieslist.Count != 0)
             {
                 currentEnemy = enemieslist[Random.Range(0, enemieslist.Count)];
+                InitEnemyView();
             }
             else
             {

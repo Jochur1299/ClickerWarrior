@@ -549,7 +549,8 @@ MonoBehaviour:
   fightController: {fileID: 424391690}
   enemiesModels:
   - {fileID: 11400000, guid: 711a3516cf43f3f4dbe9245197bf5656, type: 2}
-  - {fileID: 11400000, guid: 711a3516cf43f3f4dbe9245197bf5656, type: 2}
+  - {fileID: 11400000, guid: 49b3f12c1f61ccf429993b88d4d28553, type: 2}
+  - {fileID: 11400000, guid: a4d4df9dd8cc09d4fb3cfab5e81aab9d, type: 2}
 --- !u!4 &1835118064
 Transform:
   m_ObjectHideFlags: 0
