@@ -6,6 +6,7 @@ public class SessionController : MonoBehaviour
 {
     [SerializeField] private FightController fightController;
     [SerializeField] private List<EnemyData> enemiesModels = new();
+    [SerializeField] public TimerController StartTimer;
     
     
     private void Start()
@@ -16,6 +17,7 @@ public class SessionController : MonoBehaviour
         var player = CreatePlayer();
         var enemies = GetEnemies();
         fightController.Init(player,enemies);
+       // StartTimer();
     }
 
     private void CheckEndGame()
